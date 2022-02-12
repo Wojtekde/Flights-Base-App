@@ -1,25 +1,31 @@
 package project.sda.domain.flight;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="flight")
+@Table(name = "flights")
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name= "source_city")
+    @Column(name = "source_city")
+    @NotNull
     private String sourceCity;
     @Column(name = "destination_city")
+    @NotNull
     private String destinationCity;
     @Column(name = "date")
+    @NotNull
     private LocalDate date;
     @Column(name = "number_of_seats")
+    @NotNull
     private Integer numberOfSeatsInPlane;
 
-    public Flight(){
+    public Flight() {
 
     }
 
