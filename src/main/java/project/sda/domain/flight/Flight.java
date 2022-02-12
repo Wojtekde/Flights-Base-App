@@ -1,9 +1,14 @@
 package project.sda.domain.flight;
 
-import com.sun.istack.NotNull;
+
+
+
+
+
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
