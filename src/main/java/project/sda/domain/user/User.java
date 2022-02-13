@@ -1,8 +1,8 @@
 package project.sda.domain.user;
 
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "USERS")
@@ -13,19 +13,19 @@ public class User {
     private Integer id;
 
     @NotNull
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "username")
+    private String username;
 
     @NotNull
     @Column(name = "password")
     private String password;
 
     @NotNull
-    @Column(name = "firstname")
+    @Column(name = "first_name")
     private String firstName;
 
     @NotNull
-    @Column(name = "lastname")
+    @Column(name = "last_name")
     private String lastName;
 
     @NotNull
@@ -47,11 +47,11 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPassword() {
