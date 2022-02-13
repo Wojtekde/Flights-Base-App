@@ -63,5 +63,12 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAll() {
         return entityManager.createQuery("FROM User", User.class).getResultList();
     }
+
+    @Override
+    public User findByUsernameAndPassword(String username, String password) {
+        return entityManager.createQuery("FROM User where username = :usernameParam and password = :passwordParam", User.class)
+                .setParameter("usernameParam", username)
+                .setParameter("passwordParam", password).getSingleResult();
+    }
 }
 
