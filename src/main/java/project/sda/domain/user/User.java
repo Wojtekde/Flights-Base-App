@@ -39,12 +39,12 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, boolean blocked) {
+    public User(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.blocked = blocked;
+        this.blocked = false;
         this.role = UserRole.CLIENT;
     }
 
