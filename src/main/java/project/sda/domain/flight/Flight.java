@@ -1,13 +1,6 @@
 package project.sda.domain.flight;
 
-
-
-
-
-
-
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
