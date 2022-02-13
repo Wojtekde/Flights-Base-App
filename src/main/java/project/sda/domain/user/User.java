@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "USERS")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -30,12 +31,21 @@ public class User {
 
     @NotNull
     @Column(name = "role")
-    private int role;
+    private UserRole role;
 
     @Column(name = "blocked")
     private boolean blocked;
 
     public User() {
+    }
+
+    public User(String username, String password, String firstName, String lastName, boolean blocked) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.blocked = blocked;
+        this.role = UserRole.CLIENT;
     }
 
     public Integer getId() {
@@ -78,19 +88,19 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-
     public boolean isBlocked() {
         return blocked;
     }
 
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
