@@ -34,7 +34,7 @@ public class UserTest {
     }
 
     @Test
-    public void shouldBeCLIENTCreatedUser() {
+    public void shouldCreatedUserBeCLIENT() {
         // given
         // when
         User user = new User("qwerty", "qwert6", "Jan", "Nowak");
