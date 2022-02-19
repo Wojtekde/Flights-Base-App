@@ -1,8 +1,12 @@
 package project.sda.domain.user;
 
 
+import project.sda.domain.flight.Flight;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
@@ -35,6 +39,9 @@ public class User {
 
     @Column(name = "blocked")
     private boolean blocked;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private final List<Flight> flights = new ArrayList<>();
 
     public User() {
     }

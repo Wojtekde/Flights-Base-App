@@ -22,16 +22,16 @@ public class UserService {
         return user;
     }
 
-    void register(String username, String password, String repeatedPassword, String firstName, String lastName) {
-        if (!password.equals(repeatedPassword)) {
-            throw new MismatchedPasswordsException();
-        }
-        if (userDao.findByUsername(username) != null) {
-            throw new UserAlreadyExistsException(username);
-        }
-        User user = new User(username, password, firstName, lastName);
-        userDao.save(user);
-    }
+     public void register(String username, String password, String repeatedPassword, String firstName, String lastName) {
+         if (!password.equals(repeatedPassword)) {
+             throw new MismatchedPasswordsException();
+         }
+         if (userDao.findByUsername(username) != null) {
+             throw new UserAlreadyExistsException(username);
+         }
+         User user = new User(username, password, firstName, lastName);
+         userDao.save(user);
+     }
 
     public List<User> findAll() {
         return userDao.findAll();

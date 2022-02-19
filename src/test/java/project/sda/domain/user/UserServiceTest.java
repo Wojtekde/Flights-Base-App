@@ -14,7 +14,7 @@ public class UserServiceTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    UserService userService;
+    private UserService userService;
 
     @Before
     public void setUp() throws Exception {
@@ -40,6 +40,31 @@ public class UserServiceTest {
         assertEquals("adam123", user.getPassword());
         assertEquals("Adam", user.getFirstName());
         assertEquals("Nowak", user.getLastName());
+    }
+
+    @Test
+    public void shouldRegisterTwoUsers() {
+        // given
+        int sizeBeforeRegister = userService.findAll().size();
+
+        // when
+        userService.register("adamnowak", "adam123", "adam123", "Adam", "Nowak");
+        int sizeAfterFirstRegister = userService.findAll().size();
+        userService.register("adamnowak2", "adam123", "adam123", "Adam", "Nowak");
+        int sizeAfterSecondRegister = userService.findAll().size();
+
+        // then
+        Integer id = userService.findAll().stream().map(User::getId).distinct().findFirst().orElseThrow(() -> new RuntimeException("Id is null"));
+
+        User user = userService.findOne(id);
+        assertEquals(0, sizeBeforeRegister);
+        assertEquals(sizeBeforeRegister + 1, sizeAfterFirstRegister);
+        assertEquals("adamnowak", user.getUsername());
+        assertEquals("adam123", user.getPassword());
+        assertEquals("Adam", user.getFirstName());
+        assertEquals("Nowak", user.getLastName());
+
+        assertEquals(sizeBeforeRegister + 2, sizeAfterSecondRegister);
     }
 
 
