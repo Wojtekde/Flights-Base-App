@@ -19,15 +19,15 @@ public class UserServiceTest {
     @Before
     public void setUp() throws Exception {
         userService = new UserService(new UserDaoStub());
+
     }
 
     @Test
     public void shouldRegister() {
         // given
         int sizeBeforeRegister = userService.findAll().size();
-
-        // when
         userService.register("adamnowak", "adam123", "adam123", "Adam", "Nowak");
+        // when
         int sizeAfterRegister = userService.findAll().size();
 
         // then
@@ -91,6 +91,45 @@ public class UserServiceTest {
         userService.register(username, "adam123123", "adam123123", "Jan", "Kowalski");
 
         // then
+    }
+    @Test
+    public void addTwoUsers(){
+        //given
+        int sizeBeforeRegister = userService.findAll().size();
+        userService.register("adamnowak", "adam123", "adam123", "Adam", "Nowak");
+        int sizeBeetwenRegister = userService.findAll().size();
+        userService.register("kaiml", "kam12", "kam12", "kamil", "siulik");
+        //when
+
+        int sizeAfterRegister = userService.findAll().size();
+
+        //then
+        Integer id = userService.findAll().stream().map(User::getId).distinct().findFirst().orElseThrow(() -> new RuntimeException("Id is null"));
+        User user = userService.findOne(id);
+        Integer id1 = userService.findAll().stream().map(User::getId).filter(idd -> !idd.equals(id)).distinct().findFirst().orElseThrow(() -> new RuntimeException("Id is null"));
+        User user1 = userService.findOne(id1);
+        assertEquals(0, sizeBeforeRegister);
+        assertEquals(1, sizeBeetwenRegister);
+        assertEquals(sizeBeforeRegister + 2 , sizeAfterRegister);
+        assertEquals("adamnowak", user.getUsername());
+        assertEquals("adam123", user.getPassword());
+        assertEquals("Adam", user.getFirstName());
+        assertEquals("Nowak", user.getLastName());
+        assertEquals("kaiml", user1.getUsername());
+        assertEquals("kam12" , user1.getPassword());
+        assertEquals("kamil" , user1.getFirstName());
+        assertEquals("siulik" , user1.getLastName());
+    }
+
+    @Test
+    public void shouldFindAllThreeUsers(){
+        //given
+        userService.register("adamnowak", "adam123", "adam123", "Adam", "Nowak");
+        userService.register("kaiml", "kam12", "kam12", "kamil", "siulik");
+        userService.register("asdas" , "345432" , "345432", "tomek" ,"bebeasd");
+        //when
+        //then
+        assertEquals(3, userService.findAll().size());
     }
 
 
