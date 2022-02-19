@@ -4,6 +4,7 @@ import project.sda.infrastructure.HibernateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,8 +44,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteById(int id) {
-        Optional <User>  findOneOptional = findOneOptional(id);
-        if (findOneOptional.isPresent()){
+        Optional<User> findOneOptional = findOneOptional(id);
+        if (findOneOptional.isPresent()) {
             entityManager.remove(findOneOptional.get());
         }
     }
@@ -65,10 +66,28 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByUsernameAndPassword(String username, String password) {
-        return entityManager.createQuery("FROM User where username = :usernameParam and password = :passwordParam", User.class)
-                .setParameter("usernameParam", username)
-                .setParameter("passwordParam", password).getSingleResult();
+    public User findByUsernameAndPassword(String usernameParam, String passwordParam) {
+        try {
+
+            // select * from users where username = 'wprowdzony_login' and password = 'wprowadzony_password';
+            return entityManager.createQuery("FROM User where username = :usernameParam and password = :passwordParam", User.class)
+                    .setParameter("usernameParam", usernameParam)
+                    .setParameter("passwordParam", passwordParam).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public User findByUsername(String usernameParam) {
+        try {
+            // select * from users where username = 'wprowdzony_login' and password = 'wprowadzony_password';
+            return entityManager.createQuery("FROM User where username = :usernameParam", User.class)
+                    .setParameter("usernameParam", usernameParam)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
 
