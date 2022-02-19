@@ -1,5 +1,7 @@
 package project.sda.domain.flight;
 
+import project.sda.domain.user.User;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +18,6 @@ public interface FlightDao {
     Optional<Flight> findOneOptional(int id);
 
     List<Flight> findAll();
+
+    List<Flight> findAllAvailable(User user);
 }

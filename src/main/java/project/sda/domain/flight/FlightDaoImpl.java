@@ -1,11 +1,13 @@
 package project.sda.domain.flight;
 
+import project.sda.domain.user.User;
 import project.sda.infrastructure.HibernateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class FlightDaoImpl implements FlightDao {
 
@@ -60,5 +62,14 @@ public class FlightDaoImpl implements FlightDao {
     @Override
     public List<Flight> findAll() {
         return entityManager.createQuery("FROM Flight", Flight.class).getResultList();
+    }
+
+    @Override
+    public List<Flight> findAllAvailable(User user) {
+        List<Flight> flights = findAll();
+        List<Flight> availableFlights = flights.stream()
+                .filter(flight -> flight.isPlaceAvailable() && !flight.isUserOnThePlane(user))
+                .collect(Collectors.toList());
+        return availableFlights;
     }
 }

@@ -1,8 +1,12 @@
 package project.sda.domain.flight;
 
+import project.sda.domain.user.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "flights")
@@ -28,6 +32,9 @@ public class Flight {
     @NotNull
     private Integer numberOfSeatsInPlane;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private final List<User> users = new ArrayList<>();
+
     public Flight() {
 
     }
@@ -39,8 +46,24 @@ public class Flight {
         this.numberOfSeatsInPlane = numberOfSeatsInPlane;
     }
 
+    public int getFreePlaces() {
+        return numberOfSeatsInPlane - users.size();
+    }
+
+    public boolean isPlaceAvailable() {
+        return getFreePlaces() > 0;
+    }
+
+    public boolean isUserOnThePlane(User user) {
+        return users.contains(user);
+    }
+
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getSourceCity() {
@@ -73,5 +96,17 @@ public class Flight {
 
     public void setNumberOfSeatsInPlane(Integer numberOfSeatsInPlane) {
         this.numberOfSeatsInPlane = numberOfSeatsInPlane;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    void addUser(User user) {
+        users.add(user);
+    }
+
+    void removeUser(User user) {
+        users.remove(user);
     }
 }
