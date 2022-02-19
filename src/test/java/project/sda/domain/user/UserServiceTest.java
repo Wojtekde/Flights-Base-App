@@ -124,13 +124,10 @@ public class UserServiceTest {
     @Test
     public void shouldFindAllThreeUsers(){
         //given
-        int sizeBeforeRegister = userService.findAll().size();
         userService.register("adamnowak", "adam123", "adam123", "Adam", "Nowak");
-        int sizeBeetwenRegister = userService.findAll().size();
         userService.register("kaiml", "kam12", "kam12", "kamil", "siulik");
         userService.register("asdas" , "345432" , "345432", "tomek" ,"bebeasd");
         //when
-        int sizeAfterRegister = userService.findAll().size();
         //then
         assertEquals(3, userService.findAll().size());
     }
